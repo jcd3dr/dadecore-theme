@@ -4,18 +4,32 @@
  */
 
 function dadecore_limit_login_attempts( $user, $username ) {
-    $key = 'dadecore_login_' . $_SERVER['REMOTE_ADDR'];
-    $attempts = (int) get_transient( $key );
-    if ( $attempts >= 5 ) {
+    if ( ! get_theme_mod( 'dadecore_enable_login_protection', true ) ) {
+        return $user;
+    }
+
+    $key       = 'dadecore_login_' . $_SERVER['REMOTE_ADDR'];
+    $attempts  = (int) get_transient( $key );
+    $max       = (int) get_theme_mod( 'dadecore_max_login_attempts', 5 );
+
+    if ( $attempts >= $max ) {
         wp_die( __( 'Too many login attempts. Try again later.', 'dadecore-theme' ) );
     }
+
+    return $user;
 }
 add_filter( 'authenticate', 'dadecore_limit_login_attempts', 30, 2 );
 
 function dadecore_track_failed_login( $username ) {
-    $key = 'dadecore_login_' . $_SERVER['REMOTE_ADDR'];
+    if ( ! get_theme_mod( 'dadecore_enable_login_protection', true ) ) {
+        return;
+    }
+
+    $key      = 'dadecore_login_' . $_SERVER['REMOTE_ADDR'];
     $attempts = (int) get_transient( $key );
-    set_transient( $key, $attempts + 1, HOUR_IN_SECONDS );
+    $minutes  = (int) get_theme_mod( 'dadecore_lockout_time', 60 );
+
+    set_transient( $key, $attempts + 1, $minutes * MINUTE_IN_SECONDS );
 }
 add_action( 'wp_login_failed', 'dadecore_track_failed_login' );
 
