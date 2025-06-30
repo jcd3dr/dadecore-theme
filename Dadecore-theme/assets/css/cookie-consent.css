@@ -1,0 +1,17 @@
+.cookie-consent{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right:20px;
+    background: var(--glass-background);
+    backdrop-filter: blur(var(--glass-backdrop-blur));
+    color: var(--color-white);
+    padding: 20px;
+    border:1px solid var(--glass-border);
+    border-radius:8px;
+    z-index:9999;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.cookie-consent.hide{display:none;}
