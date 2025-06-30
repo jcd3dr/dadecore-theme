@@ -8,4 +8,5 @@ A modern WordPress theme focused on visual site management from the admin panel.
 - Customizable accent color and login URL
 - Basic SEO meta tags and schema markup
 - Cookie consent banner with Consent Mode
-- Security headers and login attempt limit
+- Security headers and login protection
+- Configurable login slug, attempt limit and lockout time
