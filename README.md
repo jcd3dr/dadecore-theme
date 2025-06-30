@@ -1,0 +1,1 @@
+# dadecore-theme
