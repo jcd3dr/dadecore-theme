@@ -25,8 +25,8 @@ if ( ! function_exists( 'dadecore_theme_setup' ) ) :
 		 */
 		load_theme_textdomain( 'dadecore-theme', get_template_directory() . '/languages' );
 
-		// Add default posts and comments RSS feed links to head.
-		add_theme_support( 'automatic-feed-links' );
+                // Add default posts and comments RSS feed links to head.
+                add_theme_support( 'automatic-feed-links' );
 
 		/*
 		 * Let WordPress manage the document title.
@@ -41,7 +41,16 @@ if ( ! function_exists( 'dadecore_theme_setup' ) ) :
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
-		add_theme_support( 'post-thumbnails' );
+                add_theme_support( 'post-thumbnails' );
+
+                // Gutenberg and block editor features.
+                add_theme_support( 'wp-block-styles' );
+                add_theme_support( 'responsive-embeds' );
+                add_theme_support( 'editor-styles' );
+                add_editor_style( 'assets/css/editor-style.css' );
+
+                add_theme_support( 'align-wide' );
+                add_theme_support( 'custom-logo', array( 'height' => 200, 'width' => 200, 'flex-height' => true, 'flex-width' => true ) );
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
@@ -87,9 +96,33 @@ function dadecore_theme_scripts() {
 	// Asegúrate de que jQuery no se cargue por defecto si no lo necesitas,
 	// o que se cargue de forma selectiva si algún plugin lo requiere.
 	// Por ahora, WordPress cargará su versión si es necesaria.
-	// Más adelante podemos desregistrarla si se necesita una solución Vanilla JS pura.
+        // Más adelante podemos desregistrarla si se necesita una solución Vanilla JS pura.
 }
 add_action( 'wp_enqueue_scripts', 'dadecore_theme_scripts' );
 
-// Incluir el archivo de funciones del customizer si lo creamos más adelante.
-// require get_template_directory() . '/inc/customizer.php';
+/** Google Tag Manager integration. */
+function dadecore_gtm_head() {
+        $id = get_theme_mod( 'dadecore_gtm_id' );
+        if ( ! $id ) {
+                return;
+        }
+        echo "<!-- Google Tag Manager -->\n";
+        echo "<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','" . esc_js( $id ) . "');</script>\n";
+        echo "<!-- End Google Tag Manager -->\n";
+}
+add_action( 'wp_head', 'dadecore_gtm_head', 0 );
+
+function dadecore_gtm_body() {
+        $id = get_theme_mod( 'dadecore_gtm_id' );
+        if ( ! $id ) {
+                return;
+        }
+        echo "<!-- Google Tag Manager (noscript) --><noscript><iframe src='https://www.googletagmanager.com/ns.html?id=" . esc_attr( $id ) . "' height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript><!-- End Google Tag Manager (noscript) -->";
+}
+add_action( 'wp_body_open', 'dadecore_gtm_body' );
+
+// Include additional functionality files.
+require get_template_directory() . '/inc/customizer.php';
+require get_template_directory() . '/inc/seo.php';
+require get_template_directory() . '/inc/security.php';
+require get_template_directory() . '/inc/cookie-consent.php';
