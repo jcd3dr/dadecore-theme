@@ -126,3 +126,4 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/security.php';
 require get_template_directory() . '/inc/cookie-consent.php';
+require get_template_directory() . '/inc/security-settings.php';
