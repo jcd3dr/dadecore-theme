@@ -47,5 +47,8 @@
         </nav>
     </header>
 
-    <!-- Contenido principal (flex: 1 para que el footer se posicione correctamente) -->
-    <div id="content" class="site-content">
+<!-- Contenedor principal del contenido -->
+<!-- 🔧 Solución del error: envolvemos todo en #page y definimos #content -->
+<div id="page">
+  <div id="content" class="site-content site-wrapper">
+
