@@ -5,7 +5,8 @@
 
 get_header(); ?>
 
-<main id="main" class="site-main" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; flex-direction: column; padding-bottom: 60px;">
+<main id="main" class="site-main page-404" style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <?php // SOLUCIÓN FOOTER: el layout global flex maneja la posición del footer ?>
     <section class="error-404 not-found" style="text-align:center; padding: 60px 20px;">
         <h1 style="font-size: 3rem; color: #00e6c3;"><?php esc_html_e( 'Error 404', 'dadecore-theme' ); ?></h1>
         <p style="font-size: 1.2rem; margin: 20px 0; color: #ccc;"><?php esc_html_e( 'Lo sentimos, la página que buscas no existe o ha sido movida.', 'dadecore-theme' ); ?></p>
