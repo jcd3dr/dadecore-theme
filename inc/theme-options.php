@@ -84,9 +84,10 @@ function dadecore_lockout_time_field() {
 
 function dadecore_enable_security_headers_field() {
     $value = get_option( 'dadecore_enable_security_headers', true );
-    echo '<label><input type="checkbox" id="dadecore_enable_security_headers" name="dadecore_enable_security_headers" value="1" ' . checked( $value, 1, false ) . ' /> ' . esc_html__( 'Inject security headers (X-Frame-Options, Content-Type, Referrer)', 'dadecore-theme' ) . '</label>';
+    echo '<label><input type="checkbox" id="dadecore_enable_security_headers" name="dadecore_enable_security_headers" value="1" ' . checked( $value, 1, false ) . ' /> ';
+    echo esc_html__( 'Inject security headers (X-Frame-Options, Content-Type, Referrer)', 'dadecore-theme' ) . '</label>';
+    echo '<p class="description">' . esc_html__( 'Recommended only if you are not using Cloudflare or a firewall that already manages these headers.', 'dadecore-theme' ) . '</p>';
 }
-
 function dadecore_render_theme_options_page() {
     $tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'integrations';
     ?>
