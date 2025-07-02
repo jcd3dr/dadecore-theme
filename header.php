@@ -8,12 +8,10 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'dadecore-theme' ); ?></a>
 
 <!-- Layout principal del sitio (Flex vertical) -->
 <div id="page">
-
-    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'dadecore-theme' ); ?></a>
-
     <header id="masthead" class="site-header">
         <div class="site-branding">
             <?php if ( is_front_page() && is_home() ) : ?>
@@ -49,6 +47,4 @@
 
 <!-- Contenedor principal del contenido -->
 <!-- 🔧 Solución del error: envolvemos todo en #page y definimos #content -->
-<div id="page">
-  <div id="content" class="site-content site-wrapper">
-
+<div id="content" class="site-content site-wrapper">
