@@ -45,6 +45,4 @@
         </nav>
     </header>
 
-<!-- Contenedor principal del contenido -->
-<!-- SOLUCIÓN FOOTER: #content dentro de #page para usar flexbox -->
-<div id="content" class="site-content site-wrapper">
+<!-- Contenedor principal del contenido --
