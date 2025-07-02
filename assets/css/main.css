@@ -890,6 +890,16 @@ img {
     word-wrap: normal !important; /* For IE11 */
 }
 
+/* --- 404 Page --- */
+.page-404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 20px;
+}
+
 /* Responsive adjustments for blog pages */
 @media (max-width: 768px) {
     .single-post-container .entry-title {
