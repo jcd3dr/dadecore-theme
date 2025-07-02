@@ -18,6 +18,8 @@
             ?>
         </div>
     </footer>
+</div> <!-- SOLUCIÓN FOOTER: Cierra contenedor principal -->
+
     <?php wp_footer(); ?>
 </body>
 </html>
