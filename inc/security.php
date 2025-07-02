@@ -98,10 +98,19 @@ class DadeCore_Security {
 	}
 
 	private function mostrar_404() {
-		status_header( 404 );
-		nocache_headers();
-		include get_404_template();
-		exit;
+    		status_header( 404 );
+    		nocache_headers();
+
+    		// Si el tema tiene una plantilla 404.php, la usamos. Si no, usamos wp_die()
+   		 $template_404 = get_404_template();
+
+    		if ( $template_404 && file_exists( $template_404 ) ) {
+        		include $template_404;
+    		} else {
+     		   wp_die( __( 'No se encuentra la página solicitada.', 'dadecore-theme' ), '404', [ 'response' => 404 ] );
+   			 }
+
+  		  exit;
 	}
 
 	private function ip() {
