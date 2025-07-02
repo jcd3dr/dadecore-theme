@@ -1,7 +1,5 @@
 <?php get_header(); ?>
 
-<!-- 🔧 Solución del error: se asume que #page y #content ya se abrieron en header.php -->
-
 <section class="error-404 not-found" style="text-align: center; padding: 80px 20px;">
     <header class="page-header">
         <h1 class="page-title">Error 404</h1>
