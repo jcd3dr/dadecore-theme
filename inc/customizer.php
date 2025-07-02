@@ -24,16 +24,6 @@ function dadecore_customize_register( $wp_customize ) {
         'type' => 'text',
     ) );
 
-    // Login slug setting
-    $wp_customize->add_setting( 'dadecore_login_slug', array(
-        'sanitize_callback' => 'sanitize_title_with_dashes',
-        'default' => 'login',
-    ) );
-    $wp_customize->add_control( 'dadecore_login_slug', array(
-        'label' => __( 'Login URL Slug', 'dadecore-theme' ),
-        'section' => 'title_tagline',
-        'type' => 'text',
-    ) );
 
     // Security section
     $wp_customize->add_section( 'dadecore_security', array(
