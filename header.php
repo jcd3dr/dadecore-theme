@@ -46,5 +46,5 @@
     </header>
 
 <!-- Contenedor principal del contenido -->
-<!-- 🔧 Solución del error: envolvemos todo en #page y definimos #content -->
+<!-- SOLUCIÓN FOOTER: #content dentro de #page para usar flexbox -->
 <div id="content" class="site-content site-wrapper">
