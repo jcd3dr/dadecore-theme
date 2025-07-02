@@ -31,6 +31,21 @@
 }
 
 /* --- Base Styles --- */
+
+html, body {
+    height: 100%;
+}
+
+#page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex: 1;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
