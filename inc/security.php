@@ -34,6 +34,9 @@ function dadecore_track_failed_login( $username ) {
 add_action( 'wp_login_failed', 'dadecore_track_failed_login' );
 
 function dadecore_security_headers() {
+    if ( ! get_option( 'dadecore_enable_security_headers', true ) ) {
+        return;
+    }
     header( 'X-Frame-Options: SAMEORIGIN' );
     header( 'X-Content-Type-Options: nosniff' );
     header( 'Referrer-Policy: no-referrer-when-downgrade' );
