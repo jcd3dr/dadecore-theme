@@ -893,11 +893,13 @@ img {
 /* --- 404 Page --- */
 .page-404 {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     text-align: center;
     padding: 60px 20px;
+    margin-top: 100px; /* separa el contenido del header fijo */
+    min-height: calc(100vh - 160px); /* asegura el footer al final */
 }
 
 /* Responsive adjustments for blog pages */
