@@ -14,5 +14,9 @@
             );
             ?>
         </div>
+</footer>
+<!-- SOLUCIÓN FOOTER: cerramos #page después del footer para el layout flex -->
+</div><!-- #page -->
+<?php wp_footer(); ?>
 </body>
 </html>
