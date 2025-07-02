@@ -4,7 +4,7 @@
  */
 
 function dadecore_limit_login_attempts( $user, $username ) {
-    if ( ! get_theme_mod( 'dadecore_enable_login_protection', true ) ) {
+    if ( ! get_option( 'dadecore_enable_login_protection', 1 ) ) {
         return $user;
     }
 
@@ -21,7 +21,7 @@ function dadecore_limit_login_attempts( $user, $username ) {
 add_filter( 'authenticate', 'dadecore_limit_login_attempts', 30, 2 );
 
 function dadecore_track_failed_login( $username ) {
-    if ( ! get_theme_mod( 'dadecore_enable_login_protection', true ) ) {
+    if ( ! get_option( 'dadecore_enable_login_protection', 1 ) ) {
         return;
     }
 
