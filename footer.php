@@ -1,10 +1,11 @@
-    </div><footer id="colophon" class="site-footer">
+    </div>
+</div>
+<footer id="colophon" class="site-footer" style="background-color: #111; padding: 40px 20px; text-align: center; color: #00e6c3;">
         <div class="site-info">
-            <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'dadecore-theme' ) ); ?>">
+            <a href="<?php echo esc_url( __( 'https://dadecore.com/', 'dadecore-theme' ) ); ?>">
                 <?php
                 /* translators: %s: CMS name, i.e. WordPress. */
-                printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'WordPress' );
-                ?>
+                printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'Dadecore.com' ); ?>
             </a>
             <span class="sep"> | </span>
             <?php
