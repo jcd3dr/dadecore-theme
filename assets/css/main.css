@@ -32,18 +32,28 @@
 
 /* --- Base Styles --- */
 
-html, body {
-    height: 100%;
+html {
+    height: 100%; /* Opcional si body tiene min-height: 100vh */
 }
 
-#page {
+body {
     min-height: 100vh;
+    display: flex; /* Hacemos body el contenedor flex principal */
+    flex-direction: column; /* Apilamos #page y otros posibles elementos directos */
+}
+
+#page { /* #page ahora es un hijo flex que puede crecer */
+    flex-grow: 1; /* Permitimos que #page crezca si body es el flex container */
     display: flex;
     flex-direction: column;
+    /* min-height: 100vh; Ya no es necesario aquí si body es el flex container principal y #page crece */
+    width: 100%; /* Aseguramos que #page ocupe todo el ancho disponible en el body flex */
 }
 
-#content {
-    flex: 1;
+#content { /* Este es el main#content.site-content */
+    flex-grow: 1; /* Renombrado de flex:1 a flex-grow:1 por claridad, el efecto es el mismo en este contexto */
+    padding-top: 80px; /* TODO: Ajustar este valor a la altura real del header fijo .site-header */
+                       /* Por ejemplo, crear una variable CSS --header-height y usarla aquí y en .site-header */
 }
 
 *, *::before, *::after {
@@ -898,8 +908,8 @@ img {
     justify-content: center;
     text-align: center;
     padding: 60px 20px;
-    margin-top: 100px; /* separa el contenido del header fijo */
-    min-height: calc(100vh - 160px); /* asegura el footer al final */
+    /* margin-top: 100px;  Este margin-top podría ser cubierto por el padding-top de #content, o ajustarse si es necesario */
+    /* min-height: calc(100vh - 160px); Ya no es necesario gracias a Flexbox en body/#page */
 }
 
 /* Responsive adjustments for blog pages */
