@@ -1,4 +1,4 @@
-    </div><!-- #content -->
+    </main><!-- #content -->
 
 <footer id="colophon" class="site-footer"><!-- SOLUCIÓN FOOTER: Ahora el footer queda dentro de #page -->
     <div class="site-info">
