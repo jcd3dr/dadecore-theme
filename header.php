@@ -48,4 +48,4 @@
     </header>
 
     <!-- Contenido principal (flex: 1 para que el footer se posicione correctamente) -->
-    <div id="content" class="site-content site-wrapper">
+    <div id="content" class="site-content">
