@@ -45,4 +45,5 @@
         </nav>
     </header>
 
-<!-- Contenedor principal del contenido --
+<!-- Contenedor principal del contenido -->
+<div id="content" class="site-content site-wrapper">
