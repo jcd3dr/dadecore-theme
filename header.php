@@ -45,8 +45,4 @@
         </nav>
     </header>
 
-<!-- Contenedor principal del contenido -->
-<!-- 🔧 Solución del error: envolvemos todo en #page y definimos #content -->
-<!--  <div id="content" class="site-content site-wrapper">  -->
-<!-- SOLUCIÓN FOOTER -->
-<div id="page" class="site-wrapper" style="min-height: 100vh; display: flex; flex-direction: column;">
+<!-- Contenedor principal del contenido --
