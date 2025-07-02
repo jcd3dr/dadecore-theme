@@ -65,6 +65,7 @@ function dadecore_register_theme_settings() {
     add_settings_field( 'dadecore_login_slug', __( 'Login URL Slug', 'dadecore-theme' ), 'dadecore_login_slug_field', 'dadecore_security', 'dadecore_security' );
     add_settings_field( 'dadecore_max_login_attempts', __( 'Max Login Attempts', 'dadecore-theme' ), 'dadecore_max_login_attempts_field', 'dadecore_security', 'dadecore_security' );
     add_settings_field( 'dadecore_lockout_time', __( 'Lockout Time (minutes)', 'dadecore-theme' ), 'dadecore_lockout_time_field', 'dadecore_security', 'dadecore_security' );
+    add_settings_field( 'dadecore_enable_security_headers', __( 'Enable Security Headers', 'dadecore-theme' ), 'dadecore_enable_security_headers_field', 'dadecore_security', 'dadecore_security' );
 }
 add_action( 'admin_init', 'dadecore_register_theme_settings' );
 
