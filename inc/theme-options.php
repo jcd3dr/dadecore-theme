@@ -3,62 +3,50 @@
  * Theme options page for DadeCore Theme.
  */
 
-/**
- * Register the theme options page under Appearance.
- */
-/*function dadecore_register_theme_options_page() {
-    add_theme_page(
-        __( 'DadeCore Options', 'dadecore-theme' ),
-        __( 'DadeCore Options', 'dadecore-theme' ),
-        'manage_options',
-        'dadecore-theme-options',
-        'dadecore_render_theme_options_page'
-    );
-}*/
 function dadecore_register_theme_options_page() {
     add_menu_page(
-        __( 'DadeCore Options', 'dadecore-theme' ), // Título en la página
-        __( 'DadeCore Theme', 'dadecore-theme' ),   // Nombre del menú en el sidebar
+        __( 'DadeCore Options', 'dadecore-theme' ),
+        __( 'DadeCore Theme', 'dadecore-theme' ),
         'manage_options',
         'dadecore-theme-options',
         'dadecore_render_theme_options_page',
-        'dashicons-admin-generic', // Puedes cambiar el ícono
-        61                          // Posición en el menú
+        'dashicons-admin-generic',
+        61
     );
 }
-
 add_action( 'admin_menu', 'dadecore_register_theme_options_page' );
 
-/**
- * Register settings, sections and fields.
- */
 function dadecore_register_theme_settings() {
-    // Integrations section.
-    register_setting( 'dadecore_integrations_settings', 'dadecore_gtm_id', array(
+    // Integrations section
+    register_setting( 'dadecore_integrations_settings', 'dadecore_gtm_id', [
         'sanitize_callback' => 'sanitize_text_field',
-    ) );
-
+    ] );
     add_settings_section( 'dadecore_integrations', '', '__return_false', 'dadecore_integrations' );
     add_settings_field( 'dadecore_gtm_id', __( 'Google Tag Manager ID', 'dadecore-theme' ), 'dadecore_gtm_id_field', 'dadecore_integrations', 'dadecore_integrations' );
 
-    // Security section.
-    register_setting( 'dadecore_security_settings', 'dadecore_enable_login_protection', array(
+    // Security section
+    register_setting( 'dadecore_security_settings', 'dadecore_enable_login_protection', [
         'sanitize_callback' => 'wp_validate_boolean',
         'type'              => 'boolean',
         'default'           => true,
-    ) );
-    register_setting( 'dadecore_security_settings', 'dadecore_login_slug', array(
+    ] );
+    register_setting( 'dadecore_security_settings', 'dadecore_login_slug', [
         'sanitize_callback' => 'sanitize_title_with_dashes',
         'default'           => 'login',
-    ) );
-    register_setting( 'dadecore_security_settings', 'dadecore_max_login_attempts', array(
+    ] );
+    register_setting( 'dadecore_security_settings', 'dadecore_max_login_attempts', [
         'sanitize_callback' => 'absint',
         'default'           => 5,
-    ) );
-    register_setting( 'dadecore_security_settings', 'dadecore_lockout_time', array(
+    ] );
+    register_setting( 'dadecore_security_settings', 'dadecore_lockout_time', [
         'sanitize_callback' => 'absint',
         'default'           => 60,
-    ) );
+    ] );
+    register_setting( 'dadecore_security_settings', 'dadecore_enable_security_headers', [
+        'sanitize_callback' => 'wp_validate_boolean',
+        'type'              => 'boolean',
+        'default'           => true,
+    ] );
 
     add_settings_section( 'dadecore_security', '', '__return_false', 'dadecore_security' );
     add_settings_field( 'dadecore_enable_login_protection', __( 'Enable Login Protection', 'dadecore-theme' ), 'dadecore_enable_login_protection_field', 'dadecore_security', 'dadecore_security' );
@@ -69,7 +57,6 @@ function dadecore_register_theme_settings() {
 }
 add_action( 'admin_init', 'dadecore_register_theme_settings' );
 
-/** Field callbacks */
 function dadecore_gtm_id_field() {
     $value = get_option( 'dadecore_gtm_id', '' );
     echo '<input type="text" id="dadecore_gtm_id" name="dadecore_gtm_id" value="' . esc_attr( $value ) . '" class="regular-text" />';
@@ -95,9 +82,11 @@ function dadecore_lockout_time_field() {
     echo '<input type="number" min="1" id="dadecore_lockout_time" name="dadecore_lockout_time" value="' . esc_attr( $value ) . '" class="small-text" />';
 }
 
-/**
- * Render the settings page markup.
- */
+function dadecore_enable_security_headers_field() {
+    $value = get_option( 'dadecore_enable_security_headers', true );
+    echo '<label><input type="checkbox" id="dadecore_enable_security_headers" name="dadecore_enable_security_headers" value="1" ' . checked( $value, 1, false ) . ' /> ' . esc_html__( 'Inject security headers (X-Frame-Options, Content-Type, Referrer)', 'dadecore-theme' ) . '</label>';
+}
+
 function dadecore_render_theme_options_page() {
     $tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'integrations';
     ?>
