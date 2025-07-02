@@ -2,8 +2,8 @@
 
     <footer id="colophon" class="site-footer">
         <div class="site-info">
-            <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'dadecore-theme' ) ); ?>">
-                <?php printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'WordPress' ); ?>
+            <a href="<?php echo esc_url( __( 'https://dadecore.com', 'dadecore-theme' ) ); ?>">
+                <?php printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'DadeCore Bizz LLC' ); ?>
             </a>
             <span class="sep"> | </span>
             <?php
