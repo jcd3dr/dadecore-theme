@@ -1,9 +1,12 @@
-    </div><!-- Cierre de #content -->
+        </div><!-- #content -->
+
+        <!-- 🔧 Solución del error: cerramos correctamente #page -->
+    </div><!-- #page -->
 
     <footer id="colophon" class="site-footer">
         <div class="site-info">
-            <a href="<?php echo esc_url( __( 'https://dadecore.com', 'dadecore-theme' ) ); ?>">
-                <?php printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'DadeCore Bizz LLC' ); ?>
+            <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'dadecore-theme' ) ); ?>">
+                <?php printf( esc_html__( 'Proudly powered by %s', 'dadecore-theme' ), 'WordPress' ); ?>
             </a>
             <span class="sep"> | </span>
             <?php
@@ -16,8 +19,6 @@
         </div>
     </footer>
 
-</div><!-- Cierre de #page -->
-
-<?php wp_footer(); ?>
+    <?php wp_footer(); ?>
 </body>
 </html>
