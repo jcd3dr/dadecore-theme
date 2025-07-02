@@ -6,7 +6,7 @@
 /**
  * Register the theme options page under Appearance.
  */
-function dadecore_register_theme_options_page() {
+/*function dadecore_register_theme_options_page() {
     add_theme_page(
         __( 'DadeCore Options', 'dadecore-theme' ),
         __( 'DadeCore Options', 'dadecore-theme' ),
@@ -14,7 +14,19 @@ function dadecore_register_theme_options_page() {
         'dadecore-theme-options',
         'dadecore_render_theme_options_page'
     );
+}*/
+function dadecore_register_theme_options_page() {
+    add_menu_page(
+        __( 'DadeCore Options', 'dadecore-theme' ), // Título en la página
+        __( 'DadeCore Theme', 'dadecore-theme' ),   // Nombre del menú en el sidebar
+        'manage_options',
+        'dadecore-theme-options',
+        'dadecore_render_theme_options_page',
+        'dashicons-admin-generic', // Puedes cambiar el ícono
+        61                          // Posición en el menú
+    );
 }
+
 add_action( 'admin_menu', 'dadecore_register_theme_options_page' );
 
 /**
