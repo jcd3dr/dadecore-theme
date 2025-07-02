@@ -46,4 +46,4 @@
     </header>
 
 <!-- Contenedor principal del contenido -->
-<div id="content" class="site-content site-wrapper">
+<div id="content" class="site-content">
