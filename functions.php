@@ -102,7 +102,7 @@ add_action( 'wp_enqueue_scripts', 'dadecore_theme_scripts' );
 
 /** Google Tag Manager integration. */
 function dadecore_gtm_head() {
-        $id = get_theme_mod( 'dadecore_gtm_id' );
+        $id = get_option( 'dadecore_gtm_id' );
         if ( ! $id ) {
                 return;
         }
@@ -113,7 +113,7 @@ function dadecore_gtm_head() {
 add_action( 'wp_head', 'dadecore_gtm_head', 0 );
 
 function dadecore_gtm_body() {
-        $id = get_theme_mod( 'dadecore_gtm_id' );
+        $id = get_option( 'dadecore_gtm_id' );
         if ( ! $id ) {
                 return;
         }
@@ -126,4 +126,4 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/security.php';
 require get_template_directory() . '/inc/cookie-consent.php';
-require get_template_directory() . '/inc/security-settings.php';
+require get_template_directory() . '/inc/theme-options.php';
