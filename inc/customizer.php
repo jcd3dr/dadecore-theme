@@ -301,17 +301,39 @@ function dadecore_customize_register_colors( $wp_customize ) {
 add_action( 'customize_register', 'dadecore_customize_register_colors' );
 
 // Inyectar los colores como variables CSS en el <head>
+function dadecore_hex_to_rgb( $hex ) {
+    $hex = ltrim( $hex, '#' );
+    if ( 3 === strlen( $hex ) ) {
+        $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+    }
+    $int = hexdec( $hex );
+    return sprintf( '%d, %d, %d', ( $int >> 16 ) & 255, ( $int >> 8 ) & 255, $int & 255 );
+}
+
 function dadecore_customizer_css_variables() {
-    $accent = get_theme_mod( 'dadecore_accent_color', '#00FFC2' );
+    $accent          = get_theme_mod( 'dadecore_accent_color', '#00FFC2' );
     $accent_secondary = get_theme_mod( 'dadecore_accent_secondary_color', '#64FFDA' );
-    $bg_color = get_theme_mod( 'dadecore_bg_color', '#0A1128' );
-    $header_bg = get_theme_mod( 'dadecore_header_bg_color', '#0A1128' );
-    $header_text = get_theme_mod( 'dadecore_header_text_color', '#ffffff' );
+    $bg_color        = get_theme_mod( 'dadecore_bg_color', '#0A1128' );
+    $header_bg       = get_theme_mod( 'dadecore_header_bg_color', '#0A1128' );
+    $header_text     = get_theme_mod( 'dadecore_header_text_color', '#ffffff' );
+
+    $accent_rgb          = dadecore_hex_to_rgb( $accent );
+    $accent_secondary_rgb = dadecore_hex_to_rgb( $accent_secondary );
+    $bg_color_rgb        = dadecore_hex_to_rgb( $bg_color );
 
     echo '<style>:root {';
     echo '--color-accent: ' . esc_attr( $accent ) . ';';
+    echo '--wp--preset--color--accent: ' . esc_attr( $accent ) . ';';
+    echo '--wp--preset--color--accent-rgb: ' . esc_attr( $accent_rgb ) . ';';
+
     echo '--color-accent-secondary: ' . esc_attr( $accent_secondary ) . ';';
+    echo '--wp--preset--color--secondary-accent: ' . esc_attr( $accent_secondary ) . ';';
+    echo '--wp--preset--color--secondary-accent-rgb: ' . esc_attr( $accent_secondary_rgb ) . ';';
+
     echo '--color-dark-blue-bg: ' . esc_attr( $bg_color ) . ';';
+    echo '--wp--preset--color--base: ' . esc_attr( $bg_color ) . ';';
+    echo '--wp--preset--color--base-rgb: ' . esc_attr( $bg_color_rgb ) . ';';
+
     echo '--header-bg-color: ' . esc_attr( $header_bg ) . ';';
     echo '--header-text-color: ' . esc_attr( $header_text ) . ';';
     echo '}</style>';
