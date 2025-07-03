@@ -27,7 +27,7 @@ function dadecore_customizer_live_preview() {
     wp_enqueue_script( 'dadecore-customizer', get_template_directory_uri() . '/assets/js/customizer-preview.js', array( 'customize-preview' ), null, true );
 }
 add_action( 'customize_preview_init', 'dadecore_customizer_live_preview' );
-
+*/
 // ===================================================================
 // ✅ BLOQUE 4: Opciones extra de tema (Header, Blog, Single, Footer, Social)
 // ===================================================================
