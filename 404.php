@@ -4,16 +4,14 @@
  * @package DadeCore Theme
  */
 
-get_header(); ?>
+get_header();
 
-<?php
-$show_sidebar     = get_theme_mod( 'dadecore_404_show_sidebar', true );
 $sidebar_position = get_theme_mod( 'dadecore_404_sidebar_position', 'right' );
 ?>
 
-<!-- ✅ SOLUCIÓN DEL ERROR: estructura con clase container y padding -->
-<main id="main" class="site-main" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-    <div class="dadecore-404-wrapper sidebar-<?php echo esc_attr( $sidebar_position ); ?>" style="text-align:center; padding: 60px 20px;">
+<div class="site-main-wrapper container section-padding sidebar-<?php echo esc_attr( $sidebar_position ); ?>">
+    <main id="main" class="site-main" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="dadecore-404-wrapper" style="text-align:center; padding: 60px 20px;">
         <section class="error-404 not-found">
         
             <h1 style="font-size: 3rem; color: var(--color-accent);">
@@ -36,13 +34,14 @@ $sidebar_position = get_theme_mod( 'dadecore_404_sidebar_position', 'right' );
         </a>
 
     </section>
+        </div>
+    </main>
 
-        <?php if ( $show_sidebar && is_active_sidebar( '404-sidebar' ) ) : ?>
-            <aside class="widget-area" style="margin-top: 40px;">
-                <?php dynamic_sidebar( '404-sidebar' ); ?>
-            </aside>
-        <?php endif; ?>
-    </div>
-</main>
+    <?php if ( get_theme_mod( 'dadecore_404_show_sidebar', true ) && is_active_sidebar( '404-sidebar' ) ) : ?>
+        <aside class="widget-area" style="margin-top: 40px;">
+            <?php dynamic_sidebar( '404-sidebar' ); ?>
+        </aside>
+    <?php endif; ?>
+</div>
 
 <?php get_footer();
