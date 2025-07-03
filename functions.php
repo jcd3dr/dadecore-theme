@@ -88,8 +88,11 @@ function dadecore_theme_scripts() {
 	// Fuentes de Google (Inter y Poppins) - Mantenido como fallback o si las fuentes locales no se usan.
 	// Si se usan fuentes locales exclusivamente desde theme.json, esta sección podría eliminarse.
 	// Precarga para optimización
-	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap', array(), null ); // No necesita versión, es CDN
-	wp_style_add_data( 'google-fonts', 'precache', true );
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap', array(), null ); // No necesita versión, es CDN
+    wp_style_add_data( 'google-fonts', 'precache', true );
+
+    // Dashicons for frontend icons (social links)
+    wp_enqueue_style( 'dashicons' );
 
 
 	// Script principal del tema

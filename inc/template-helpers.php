@@ -54,4 +54,51 @@ function dadecore_get_fallback_image_url() {
     return get_template_directory_uri() . '/assets/img/placeholder-project1.jpg'; // Re-use an existing placeholder
 }
 
+/**
+ * Return an array of social links defined in the Customizer.
+ */
+function dadecore_get_social_links() {
+    $networks = array( 'facebook', 'twitter', 'instagram', 'linkedin', 'github' );
+    $links    = array();
+    foreach ( $networks as $network ) {
+        $url = get_theme_mod( 'dadecore_social_' . $network );
+        if ( $url ) {
+            $links[ $network ] = esc_url( $url );
+        }
+    }
+    return $links;
+}
+
+/**
+ * Echo list of social links.
+ */
+function dadecore_output_social_links() {
+    $links = dadecore_get_social_links();
+    if ( empty( $links ) ) {
+        return;
+    }
+    echo '<ul class="social-links-list">';
+    foreach ( $links as $network => $url ) {
+        echo '<li class="social-link social-' . esc_attr( $network ) . '"><a href="' . esc_url( $url ) . '" target="_blank" rel="nofollow"><span class="dashicons dashicons-' . esc_attr( $network ) . '"></span></a></li>';
+    }
+    echo '</ul>';
+}
+
+/**
+ * Custom excerpt length based on Customizer setting.
+ */
+function dadecore_custom_excerpt_length( $length ) {
+    $custom = get_theme_mod( 'dadecore_blog_excerpt_length', 20 );
+    return absint( $custom );
+}
+add_filter( 'excerpt_length', 'dadecore_custom_excerpt_length' );
+
+/**
+ * Helper to check if any social link exists.
+ */
+function dadecore_has_social_links() {
+    $links = dadecore_get_social_links();
+    return ! empty( $links );
+}
+
 ?>

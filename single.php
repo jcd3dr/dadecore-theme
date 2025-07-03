@@ -8,9 +8,11 @@
  */
 
 get_header();
+$show_meta    = get_theme_mod( 'dadecore_single_show_meta', true );
+$sidebar_pos  = get_theme_mod( 'dadecore_single_sidebar_position', 'right' );
 ?>
 
-<div class="site-main-wrapper container section-padding">
+<div class="site-main-wrapper container section-padding sidebar-<?php echo esc_attr( $sidebar_pos ); ?>">
     <main id="primary" class="site-main content-area">
         <?php
         while ( have_posts() ) :
@@ -23,9 +25,9 @@ get_header();
                 <div class="container">
                     <header class="entry-header">
                         <?php the_title( '<h1 class="entry-title section-title">', '</h1>' ); ?>
+                        <?php if ( $show_meta ) : ?>
                         <div class="entry-meta section-subtitle">
                             <?php
-                            // Información del post: autor, fecha, categorías
                             printf(
                                 esc_html__( 'Publicado el %1$s por %2$s en %3$s', 'dadecore-theme' ),
                                 '<time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date() ) . '</time>',
@@ -34,6 +36,7 @@ get_header();
                             );
                             ?>
                         </div>
+                        <?php endif; ?>
                     </header><?php if ( has_post_thumbnail() ) : ?>
                         <div class="post-thumbnail-single">
                             <?php the_post_thumbnail( 'large' ); // Puedes usar 'full', 'large', 'medium', etc. ?>

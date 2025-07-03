@@ -13,6 +13,8 @@
  */
 
 get_header();
+$blog_view   = get_theme_mod( 'dadecore_blog_view', 'grid' );
+$show_sidebar = get_theme_mod( 'dadecore_blog_sidebar', true );
 ?>
 
 <div class="site-main-wrapper container section-padding">
@@ -23,7 +25,7 @@ get_header();
             </header>
         <?php endif; ?>
 
-        <div class="blog-posts-grid">
+        <div class="blog-posts-grid <?php echo ( 'list' === $blog_view ) ? 'blog-posts-list' : ''; ?>">
             <?php
             if ( have_posts() ) :
                 /* Start the Loop */
@@ -81,7 +83,7 @@ get_header();
         </div><!-- .blog-posts-grid -->
     </main><!-- #primary .content-area -->
 
-    <?php get_sidebar(); ?>
+    <?php if ( $show_sidebar ) { get_sidebar(); } ?>
 
 </div><!-- .site-main-wrapper -->
 <?php

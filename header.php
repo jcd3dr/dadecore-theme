@@ -12,7 +12,15 @@
 
 <!-- Layout principal del sitio (Flex vertical) -->
 <div id="page">
-    <header id="masthead" class="site-header">
+    <?php
+    $logo_pos   = get_theme_mod( 'dadecore_logo_position', 'left' );
+    $nav_align  = get_theme_mod( 'dadecore_nav_alignment', 'right' );
+    $sticky     = get_theme_mod( 'dadecore_enable_sticky_header', true );
+    $header_cls = 'site-header';
+    $header_cls .= $sticky ? '' : ' no-sticky';
+    $header_cls .= ' logo-' . $logo_pos . ' nav-' . $nav_align;
+    ?>
+    <header id="masthead" class="<?php echo esc_attr( $header_cls ); ?>">
         <div class="site-branding">
             <?php if ( is_front_page() && is_home() ) : ?>
                 <h1 class="site-title">
@@ -43,6 +51,11 @@
             ) );
             ?>
         </nav>
+        <?php if ( function_exists( 'dadecore_has_social_links' ) && dadecore_has_social_links() ) : ?>
+            <div class="header-social-links">
+                <?php dadecore_output_social_links(); ?>
+            </div>
+        <?php endif; ?>
     </header>
     <?php
     if ( is_active_sidebar( 'ads-header' ) ) : ?>
