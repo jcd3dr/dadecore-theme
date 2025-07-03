@@ -34,7 +34,6 @@ function dadecore_customizer_css() {
 }
 add_action( 'wp_head', 'dadecore_customizer_css' );
 */
-<?php
 /**
  * Theme Customizer enhancements for DadeCore Theme.
  *
