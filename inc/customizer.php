@@ -1,8 +1,13 @@
 <?php
 /**
  * Theme Customizer enhancements for DadeCore Theme.
+ *
+ * This file is temporarily commented out as its functionality (accent color)
+ * has been migrated to theme.json. It can be repurposed later for other
+ * Customizer options not suitable for theme.json.
  */
 
+/*
 function dadecore_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'dadecore_accent_color', array(
         'default' => '#00FFC2',
@@ -28,3 +33,4 @@ function dadecore_customizer_css() {
     echo '<style>:root{--color-green-tech:' . esc_attr( $accent ) . ';}</style>';
 }
 add_action( 'wp_head', 'dadecore_customizer_css' );
+*/

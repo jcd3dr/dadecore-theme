@@ -10,8 +10,8 @@
 get_header();
 ?>
 
-    <main id="primary" class="site-main">
-
+<div class="site-main-wrapper container section-padding">
+    <main id="primary" class="site-main content-area">
         <?php
         while ( have_posts() ) :
             the_post();
@@ -76,8 +76,27 @@ get_header();
                 comments_template();
             endif;
 
-        endwhile; // End of the loop.
-        ?>
+            // Post navigation.
+            the_post_navigation(
+                array(
+                    'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'dadecore-theme' ) . '</span> <span class="nav-title">%title</span>',
+                    'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'dadecore-theme' ) . '</span> <span class="nav-title">%title</span>',
+                )
+            );
 
-    </main><?php
+        endwhile; // End of the loop.
+
+        // Ad area after content
+        if ( is_active_sidebar( 'ads-after-content' ) ) {
+            echo '<div class="ads-after-content-area">';
+            dynamic_sidebar( 'ads-after-content' );
+            echo '</div>';
+        }
+        ?>
+    </main><!-- #primary .content-area -->
+
+    <?php get_sidebar(); ?>
+
+</div><!-- .site-main-wrapper -->
+<?php
 get_footer();

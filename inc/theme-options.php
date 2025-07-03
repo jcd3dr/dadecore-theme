@@ -24,6 +24,15 @@ function dadecore_register_theme_settings() {
     add_settings_section( 'dadecore_integrations', '', '__return_false', 'dadecore_integrations' );
     add_settings_field( 'dadecore_gtm_id', __( 'Google Tag Manager ID', 'dadecore-theme' ), 'dadecore_gtm_id_field', 'dadecore_integrations', 'dadecore_integrations' );
 
+    // Social Profiles for Organization Schema
+    register_setting( 'dadecore_integrations_settings', 'dadecore_social_profiles', [
+        'sanitize_callback' => 'dadecore_sanitize_social_profiles',
+        'type' => 'array',
+        'default' => []
+    ] );
+    add_settings_field( 'dadecore_social_profiles', __( 'Social Profiles (URLs for Organization Schema)', 'dadecore-theme' ), 'dadecore_social_profiles_field', 'dadecore_integrations', 'dadecore_integrations' );
+
+
     // Security section
     register_setting( 'dadecore_security_settings', 'dadecore_enable_login_protection', [
         'sanitize_callback' => 'wp_validate_boolean',
@@ -60,7 +69,34 @@ add_action( 'admin_init', 'dadecore_register_theme_settings' );
 function dadecore_gtm_id_field() {
     $value = get_option( 'dadecore_gtm_id', '' );
     echo '<input type="text" id="dadecore_gtm_id" name="dadecore_gtm_id" value="' . esc_attr( $value ) . '" class="regular-text" />';
+    echo '<p class="description">' . esc_html__( 'Enter your Google Tag Manager ID (e.g., GTM-XXXXXX).', 'dadecore-theme' ) . '</p>';
 }
+
+function dadecore_social_profiles_field() {
+    $profiles = get_option( 'dadecore_social_profiles', [] );
+    // Define a list of common social networks
+    $social_networks = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube', 'pinterest', 'github'];
+
+    echo '<p class="description">' . esc_html__( 'Enter the full URLs for your organization\'s social media profiles.', 'dadecore-theme' ) . '</p>';
+    foreach ( $social_networks as $network ) {
+        $value = isset( $profiles[$network] ) ? $profiles[$network] : '';
+        echo '<p><label style="display:inline-block; width:100px;" for="dadecore_social_' . esc_attr( $network ) . '">' . esc_html( ucfirst( $network ) ) . ':</label> ';
+        echo '<input type="url" id="dadecore_social_' . esc_attr( $network ) . '" name="dadecore_social_profiles[' . esc_attr( $network ) . ']" value="' . esc_url( $value ) . '" class="regular-text" placeholder="https://' . esc_attr( $network ) . '.com/yourprofile" /></p>';
+    }
+}
+
+function dadecore_sanitize_social_profiles( $input ) {
+    $output = [];
+    if ( is_array( $input ) ) {
+        foreach ( $input as $network => $url ) {
+            if ( ! empty( $url ) ) {
+                $output[sanitize_key( $network )] = esc_url_raw( $url );
+            }
+        }
+    }
+    return $output;
+}
+
 
 function dadecore_enable_login_protection_field() {
     $value = get_option( 'dadecore_enable_login_protection', 1 );

@@ -5,29 +5,44 @@
 */
 
 /* --- Variables CSS (Colores y Tipografía) --- */
+/*
+  Las variables de color y tipografía principales ahora se definen en theme.json
+  y se acceden mediante las variables CSS generadas por WordPress (ej. --wp--preset--color--base).
+  A continuación, se definen algunas variables personalizadas adicionales o mapeos si son necesarios.
+*/
 :root {
-    --color-dark-blue: #0A1128;
-    --color-green-tech: #00FFC2; /* Un verde vibrante para tech */
-    --color-gray-light: #F0F2F5;
-    --color-gray-medium: #A0A0A0;
-    --color-gray-dark: #333333;
-    --color-white: #FFFFFF;
-    --color-black: #000000;
+    /* Mapeos o variables adicionales si son estrictamente necesarias */
+    --font-primary: var(--wp--preset--font-family--inter);
+    --font-secondary: var(--wp--preset--font-family--poppins);
 
-    --font-primary: 'Inter', sans-serif;
-    --font-secondary: 'Poppins', sans-serif;
+    /* Colores específicos del tema que no están en la paleta principal de theme.json o para mayor conveniencia */
+    /* Es preferible usar los --wp--preset--color directamente si es posible */
+    --color-dark-blue-bg: var(--wp--preset--color--base); /* #0A1128 from theme.json */
+    --color-text-contrast: var(--wp--preset--color--contrast); /* #CCD6F6 from theme.json */
+    --color-accent: var(--wp--preset--color--accent); /* #00FFC2 from theme.json */
+    --color-accent-secondary: var(--wp--preset--color--secondary-accent); /* #64FFDA from theme.json */
+    --color-text-light-grey: var(--wp--preset--color--light-grey); /* #8892B0 from theme.json */
+    --color-bg-dark-grey: var(--wp--preset--color--dark-grey); /* #112240 from theme.json */
+    --color-white: var(--wp--preset--color--white); /* #FFFFFF from theme.json */
+    --color-black: var(--wp--preset--color--black); /* #000000 from theme.json */
 
-    --max-width-container: 1200px;
-    --padding-section: 80px; /* Padding estándar para secciones */
+    /* Layout */
+    --content-width: var(--wp--custom--layout--content-size, 720px); /* Fallback si no está en theme.json */
+    --wide-width: var(--wp--custom--layout--wide-size, 1100px); /* Fallback si no está en theme.json */
+    --max-width-container: var(--wide-width); /* Usar el wideSize para el contenedor general */
 
-    /* Glassmorphism */
-    --glass-background: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --padding-section-vertical: var(--wp--preset--spacing--x-large, 60px); /* Mapear a los spacing presets de theme.json */
+    --padding-section-horizontal: var(--wp--preset--spacing--medium, 20px);
+
+
+    /* Efectos */
+    --glass-background: rgba(17, 34, 64, 0.75); /* Usando --color-bg-dark-grey como base con alfa */
+    --glass-border: rgba(100, 255, 218, 0.2); /* Usando --color-accent-secondary como base con alfa */
     --glass-backdrop-blur: 10px;
 
     /* Gradientes */
-    --gradient-blue-dark: linear-gradient(135deg, var(--color-dark-blue) 0%, #171f3a 100%);
-    --gradient-tech-glow: linear-gradient(90deg, #00C2FF, #00FFC2); /* Para bordes arcoíris */
+    --gradient-blue-dark: linear-gradient(135deg, var(--color-dark-blue-bg) 0%, var(--color-bg-dark-grey) 100%);
+    --gradient-tech-glow: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent));
 }
 
 /* --- Base Styles --- */
@@ -40,6 +55,12 @@ body {
     min-height: 100vh;
     display: flex; /* Hacemos body el contenedor flex principal */
     flex-direction: column; /* Apilamos #page y otros posibles elementos directos */
+    background-color: var(--color-dark-blue-bg); /* Usando variable de theme.json */
+    color: var(--color-text-contrast); /* Usando variable de theme.json */
+    font-family: var(--font-primary); /* Usando variable de theme.json */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 #page { /* #page ahora es un hijo flex que puede crecer */
@@ -52,9 +73,11 @@ body {
 
 #content { /* Este es el main#content.site-content */
     flex-grow: 1; /* Renombrado de flex:1 a flex-grow:1 por claridad, el efecto es el mismo en este contexto */
-    padding-top: 80px; /* TODO: Ajustar este valor a la altura real del header fijo .site-header */
-                       /* Por ejemplo, crear una variable CSS --header-height y usarla aquí y en .site-header */
+    /* El padding-top para el header fijo se manejará con más precisión */
+    /* --header-height será definida en la sección del header */
+    padding-top: var(--header-height, 80px);
 }
+
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -66,29 +89,22 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: var(--font-primary);
-    line-height: 1.6;
-    color: var(--color-gray-light);
-    background-color: var(--color-dark-blue);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+/* body ya tiene font-family, line-height, color, background-color definidos arriba */
 
 a {
-    color: var(--color-green-tech);
+    color: var(--color-accent); /* Usando variable de theme.json */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: var(--color-white);
+    color: var(--color-accent-secondary); /* Usando variable de theme.json */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-secondary);
+    font-family: var(--font-secondary); /* Usando variable de theme.json */
     margin-bottom: 0.5em;
-    color: var(--color-white);
+    color: var(--color-white); /* O --wp--preset--color--contrast si es más apropiado */
 }
 
 p {
@@ -103,16 +119,19 @@ img {
 
 .container {
     max-width: var(--max-width-container);
-    margin: 0 auto;
-    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--padding-section-horizontal);
+    padding-right: var(--padding-section-horizontal);
 }
 
 .section-padding {
-    padding: var(--padding-section) 0;
+    padding-top: var(--padding-section-vertical);
+    padding-bottom: var(--padding-section-vertical);
 }
 
 .section-title {
-    font-size: 2.5em;
+    font-size: 2.5em; /* Considerar usar clamp() o presets de theme.json */
     text-align: center;
     margin-bottom: 15px;
     position: relative;
@@ -131,10 +150,10 @@ img {
 }
 
 .section-subtitle {
-    font-size: 1.2em;
+    font-size: 1.2em; /* Considerar usar clamp() o presets de theme.json */
     text-align: center;
     margin-bottom: 40px;
-    color: var(--color-gray-medium);
+    color: var(--color-text-light-grey); /* Usando variable de theme.json */
 }
 
 .bg-dark-gradient {
@@ -146,6 +165,8 @@ img {
 }
 
 /* --- Buttons --- */
+/* Estilos para .wp-block-button se definirán en theme.json o aquí si se necesita más especificidad */
+/* Estas clases .btn, .btn-primary, .btn-secondary son personalizadas y pueden coexistir o reemplazarse */
 .btn {
     display: inline-block;
     padding: 12px 25px;
@@ -155,37 +176,43 @@ img {
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    font-family: var(--font-secondary);
 }
 
 .btn-primary {
-    background-color: var(--color-green-tech);
-    color: var(--color-dark-blue);
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg); /* Color base para el texto del botón primario */
 }
 
 .btn-primary:hover {
-    background-color: var(--color-white);
-    color: var(--color-dark-blue);
+    background-color: var(--color-accent-secondary);
+    color: var(--color-dark-blue-bg);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--color-green-tech);
-    border: 2px solid var(--color-green-tech);
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
 }
 
 .btn-secondary:hover {
-    background-color: var(--color-green-tech);
-    color: var(--color-dark-blue);
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
     transform: translateY(-2px);
 }
 
 /* --- Header / Navigation --- */
+:root {
+    /* Definir la altura del header para usarla en el padding-top de #content */
+    --header-height: 70px; /* Ajustar este valor según el padding final del header */
+}
+
 .site-header {
-    background-color: rgba(0, 0, 0, 0.4); /* Glassmorphism background */
+    background-color: var(--glass-background);
     backdrop-filter: blur(var(--glass-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
-    padding: 20px; /* Ajuste para que no esté pegado a los bordes */
+    padding: 15px var(--padding-section-horizontal); /* Usar variable para padding horizontal */
     position: fixed;
     width: 100%;
     top: 0;
@@ -195,35 +222,39 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: var(--header-height);
 }
 
 .site-branding {
-    margin-left: 0; /* Resetear margen para permitir control en media queries */
+    margin-left: 0;
 }
 
 .site-title {
-    font-size: 1.8em;
+    font-size: var(--wp--preset--font-size--large, 1.8em); /* Usar preset de theme.json */
     margin: 0;
 }
 
 .site-title a {
-    color: var(--color-green-tech);
+    color: var(--color-accent);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .site-title a:hover {
-    color: var(--color-white);
+    color: var(--color-accent-secondary);
 }
 
 .site-description {
-    font-size: 0.9em;
-    color: var(--color-gray-medium);
+    font-size: var(--wp--preset--font-size--small, 0.9em); /* Usar preset de theme.json */
+    color: var(--color-text-light-grey);
     margin: 0;
 }
 
 /* Estilos de la lista de menú para escritorio */
-.main-navigation ul {
+/* Estos estilos aplican a .primary-menu-container > ul si wp_nav_menu no tiene 'container' => false */
+/* O directamente a .main-navigation ul si ese es el contenedor */
+.main-navigation .primary-menu, /* Si el ID del ul es primary-menu */
+.main-navigation ul { /* Fallback genérico */
     list-style: none;
     display: flex; /* Muestra los elementos en fila en escritorio */
     margin: 0;
@@ -231,15 +262,16 @@ img {
 }
 
 .main-navigation li {
-    margin-left: 30px;
+    margin-left: var(--wp--preset--spacing--medium, 30px); /* Usar preset de theme.json */
 }
 
 .main-navigation a {
     color: var(--color-white);
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: var(--wp--preset--font-size--normal, 1em); /* Ajustar según sea necesario */
     position: relative;
     padding-bottom: 5px;
+    font-family: var(--font-secondary);
 }
 
 .main-navigation a::after {
@@ -253,7 +285,9 @@ img {
     transition: width 0.3s ease;
 }
 
-.main-navigation a:hover::after {
+.main-navigation a:hover::after,
+.main-navigation .current-menu-item > a::after,
+.main-navigation .current-menu-ancestor > a::after {
     width: 100%;
 }
 
@@ -262,136 +296,115 @@ img {
     display: none;
     background: none;
     border: none;
-    color: var(--color-green-tech);
-    font-size: 1.5em;
+    color: var(--color-accent);
+    font-size: 1.8em; /* Hacerlo un poco más grande */
     cursor: pointer;
-    z-index: 1001; /* Asegura que esté por encima del menú desplegado */
+    z-index: 1001;
 }
 
 /* Contenedor del menú principal, para manejar la visibilidad en móvil */
 .primary-menu-container {
-    /* Por defecto en escritorio, es visible y flexible */
     display: flex;
     align-items: center;
 }
 
 
 /* --- Hero Section --- */
+/* Estos estilos son para el patrón de bloque Hero.
+   Se pueden aplicar a un bloque de Grupo con la clase .hero-section si es necesario. */
 .hero-section {
-    position: relative;
-    height: 100vh; /* Ocupa toda la altura de la ventana */
+    position: relative; /* Necesario para los objetos de fondo si se mantienen */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow: hidden; /* Importante para los objetos de fondo */
-    padding-top: 100px; /* Espacio para el header fijo */
-    background: radial-gradient(circle at center, rgba(10, 17, 40, 0.8) 0%, var(--color-dark-blue) 70%);
+    overflow: hidden;
+    padding-top: var(--header-height); /* Si el hero no es full-screen y está después del header */
+    /* Si el hero es full screen (100vh), el padding-top del header ya está en #content */
+    /* background: radial-gradient(circle at center, rgba(10, 17, 40, 0.8) 0%, var(--color-dark-blue-bg) 70%); */
+    /* El fondo se maneja mejor con bloques de Cover o Grupo y sus opciones de fondo */
 }
 
+/* Los objetos de fondo animados pueden ser complejos de replicar solo con CSS en patrones.
+   Considerar si este efecto es esencial o puede simplificarse.
+   Si se mantiene, estas clases deben aplicarse a elementos dentro del patrón. */
 .hero-background-objects {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    pointer-events: none; /* Para que no interfiera con el contenido */
+    z-index: 0; /* Detrás del contenido del hero */
+    pointer-events: none;
 }
 
 .object {
     position: absolute;
-    background: rgba(0, 255, 194, 0.1); /* Verde tech translúcido */
+    background: var(--wp--preset--color--accent, #00FFC2); /* Color de los objetos */
+    opacity: 0.1; /* Opacidad de los objetos */
     border-radius: 50%;
     animation: moveObjects 20s infinite alternate ease-in-out;
 }
 
-.object-1 {
-    width: 150px;
-    height: 150px;
-    top: 10%;
-    left: 15%;
-    animation-delay: 0s;
-}
-
-.object-2 {
-    width: 200px;
-    height: 200px;
-    bottom: 5%;
-    right: 10%;
-    animation-delay: 5s;
-}
-
-.object-3 {
-    width: 100px;
-    height: 100px;
-    top: 40%;
-    right: 25%;
-    animation-delay: 10s;
-}
+.object-1 { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
+.object-2 { width: 200px; height: 200px; bottom: 5%; right: 10%; animation-delay: 5s; }
+.object-3 { width: 100px; height: 100px; top: 40%; right: 25%; animation-delay: 10s; }
 
 @keyframes moveObjects {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.2;
-    }
-    50% {
-        transform: translate(50px, 50px) scale(1.1);
-        opacity: 0.4;
-    }
-    100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.2;
-    }
+    0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+    50% { transform: translate(2vw, 2vh) scale(1.1); opacity: 0.15; } /* Movimiento relativo al viewport */
+    100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
 }
 
-.hero-content {
+.hero-content { /* Aplicar a un bloque de Grupo interno en el patrón Hero */
     position: relative;
-    z-index: 2;
+    z-index: 1; /* Encima de .hero-background-objects */
     color: var(--color-white);
-    max-width: 800px;
+    padding: var(--wp--preset--spacing--large) var(--wp--preset--spacing--medium);
 }
 
-.hero-title {
-    font-size: 3.5em;
-    margin-bottom: 20px;
+.hero-title { /* Aplicar a un bloque de Encabezado en el patrón Hero */
+    font-size: clamp(2.5rem, 5vw, 3.5rem); /* Responsive font size */
+    margin-bottom: var(--wp--preset--spacing--small);
     line-height: 1.2;
 }
 
-.hero-title .highlight {
-    color: var(--color-green-tech);
+.hero-title .highlight,
+.hero-title .has-accent-color { /* Para cuando se usa el color de acento desde el editor */
+    color: var(--color-accent);
 }
 
-.hero-subtitle {
-    font-size: 1.5em;
-    margin-bottom: 40px;
-    color: var(--color-gray-light);
+.hero-subtitle { /* Aplicar a un bloque de Párrafo en el patrón Hero */
+    font-size: clamp(1rem, 2.5vw, 1.25rem); /* Responsive font size */
+    margin-bottom: var(--wp--preset--spacing--medium);
+    color: var(--color-text-contrast);
 }
 
-.hero-buttons .btn {
-    margin: 0 15px;
+.hero-buttons .wp-block-button { /* Estilos para los botones dentro del contenedor de botones del hero */
+    margin: 5px; /* Ajustar espaciado entre botones si es necesario */
 }
 
-/* --- Cards (general styling) --- */
+/* --- Cards (general styling for custom classes, complementa a los bloques de Grupo/Columna) --- */
 .card {
     background: var(--glass-background);
     backdrop-filter: blur(var(--glass-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
     border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: var(--wp--custom--border--radius, 10px); /* Usar variable de theme.json si existe para border radius */
+    padding: var(--wp--preset--spacing--medium); /* Usar preset de theme.json */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Sombra un poco más oscura */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    overflow: hidden; /* Para el efecto de borde arcoíris */
+    overflow: hidden;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
 }
 
 /* --- Card Glow on Hover (Depth Effect) --- */
-.card-glow {
+.card-glow { /* Esta clase se puede añadir a bloques de Grupo */
     position: relative;
 }
 
@@ -402,64 +415,105 @@ img {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: var(--gradient-tech-glow);
-    border-radius: 10px;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    border-radius: inherit; /* Heredar el border-radius de la tarjeta */
     opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-    filter: blur(20px); /* Efecto de brillo */
+    transition: opacity 0.4s ease-in-out;
+    z-index: 0; /* Detrás del contenido de la tarjeta */
+    filter: blur(30px);
+    pointer-events: none;
 }
 
 .card-glow:hover::before {
-    opacity: 0.3; /* Aumenta el brillo al pasar el ratón */
+    opacity: 0.15; /* Ajustar opacidad para la sutileza deseada */
 }
 
 /* --- Card with Rainbow Border (Portfolio) --- */
+/* Esta clase se puede añadir a bloques de Grupo que contienen una imagen, por ejemplo */
 .card-glow-border {
     position: relative;
-    padding: 2px; /* Espacio para el borde */
-    background: var(--glass-background); /* Fondo del contenido */
-    overflow: hidden;
+    padding: 2px; /* Espacio para el borde animado */
+    background-clip: padding-box; /* Asegura que el fondo no se extienda debajo del borde */
+    border: 2px solid transparent; /* Para mantener el layout estable */
+    border-radius: var(--wp--custom--border--radius, 10px); /* Ajustar según theme.json */
+    overflow: hidden; /* Para que el pseudo-elemento no se salga */
 }
 
-.card-glow-border::before {
+.card-glow-border::before { /* El borde animado */
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 10px;
-    padding: 2px; /* Grosor del borde */
+    top: 0; left: 0; right: 0; bottom: 0;
+    margin: -2px; /* Compensa el padding del contenedor para que el borde esté "afuera" */
     background: var(--gradient-tech-glow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    z-index: 1; /* Asegura que esté sobre el contenido */
-    animation: rotateBorder 5s linear infinite; /* Animación de rotación */
-    opacity: 0; /* Oculto por defecto */
+    z-index: -1; /* Detrás del contenido de la tarjeta */
+    animation: rotateBorder 5s linear infinite;
+    opacity: 0;
     transition: opacity 0.3s ease;
+    border-radius: inherit; /* Heredar el border-radius */
 }
 
 .card-glow-border:hover::before {
-    opacity: 1; /* Muestra el borde al pasar el ratón */
+    opacity: 1;
 }
+/* El contenido dentro de .card-glow-border necesita su propio fondo */
+.card-glow-border > .wp-block-group__inner-container, /* Para bloques de Grupo */
+.card-glow-border > * { /* Para otros elementos directos */
+    background: var(--glass-background); /* O el color de fondo deseado para el contenido */
+    border-radius: calc(var(--wp--custom--border--radius, 10px) - 2px); /* Radio interior */
+    padding: var(--wp--preset--spacing--medium); /* Padding del contenido interno */
+    height: 100%; /* Asegurar que ocupe todo el espacio */
+    display: block; /* O flex, según el contenido */
+}
+
 
 @keyframes rotateBorder {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-.portfolio-item img {
-    border-radius: 8px;
-    margin-bottom: 15px;
+/* Estilos para elementos dentro de las tarjetas de portfolio, si se usan clases personalizadas */
+.portfolio-item img,
+.wp-block-image.is-style-default-image-portfolio img { /* Ejemplo si se crea un estilo de bloque */
+    border-radius: calc(var(--wp--custom--border--radius, 8px) - 4px); /* Radio más pequeño si la tarjeta tiene padding */
+    margin-bottom: var(--wp--preset--spacing--small);
 }
 
-.portfolio-item h4 {
-    font-size: 1.3em;
-    margin-bottom: 5px;
-    color: var(--color-green-tech);
+.portfolio-item h4,
+.wp-block-heading.is-style-portfolio-item-title { /* Ejemplo */
+    font-size: var(--wp--preset--font-size--medium);
+    margin-bottom: var(--wp--preset--spacing--custom-2, 5px); /* Asumiendo custom-2 es pequeño */
+    color: var(--color-accent);
 }
+
+/* --- Layout con Sidebar --- */
+.site-main-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Para que la sidebar caiga abajo en móviles */
+    gap: var(--wp--preset--spacing--large, 40px); /* Espacio entre contenido y sidebar */
+}
+
+.content-area {
+    flex: 1; /* Ocupa el espacio disponible */
+    min-width: 0; /* Previene que el contenido flex se desborde si es muy ancho */
+}
+
+.widget-area { /* #secondary, la sidebar */
+    flex-basis: 300px; /* Ancho base de la sidebar */
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+@media (max-width: 991px) { /* Breakpoint para tablet y móviles donde la sidebar va abajo */
+    .site-main-wrapper {
+        flex-direction: column;
+    }
+    .widget-area {
+        flex-basis: auto; /* Ancho automático cuando está en columna */
+        width: 100%;
+        margin-top: var(--wp--preset--spacing--large, 40px);
+    }
+}
+
 
 /* --- Services Section --- */
 .services-grid {
@@ -520,19 +574,466 @@ img {
     color: var(--color-dark-blue);
 }
 
+/* --- Widgets --- */
+.widget-area .widget {
+    background-color: var(--glass-background); /* Fondo glassmorphism para widgets */
+    backdrop-filter: blur(var(--glass-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
+    border: 1px solid var(--glass-border);
+    padding: var(--wp--preset--spacing--medium, 20px);
+    margin-bottom: var(--wp--preset--spacing--large, 40px);
+    border-radius: var(--wp--custom--border--radius, 8px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.widget-area .widget:last-child {
+    margin-bottom: 0;
+}
+
+.widget-area .widget-title {
+    font-size: var(--wp--preset--font-size--medium, 1.25em);
+    color: var(--color-accent);
+    margin-bottom: var(--wp--preset--spacing--small, 15px);
+    padding-bottom: var(--wp--preset--spacing--custom-1, 10px); /* Asumiendo custom-1 es pequeño */
+    border-bottom: 2px solid var(--color-accent);
+    display: inline-block; /* Para que el borde no ocupe todo el ancho */
+}
+
+.widget-area .widget ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.widget-area .widget ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--glass-border);
+    color: var(--color-text-contrast);
+}
+
+.widget-area .widget ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.widget-area .widget ul li a {
+    color: var(--color-text-contrast);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.widget-area .widget ul li a:hover {
+    color: var(--color-accent);
+}
+
+/* Estilos específicos para widgets comunes */
+.widget_search .search-form {
+    display: flex;
+}
+.widget_search .search-field {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--glass-border);
+    background-color: rgba(255,255,255,0.05);
+    color: var(--color-white);
+    border-radius: 4px 0 0 4px;
+}
+.widget_search .search-submit {
+    padding: 10px 15px;
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
+    border: 1px solid var(--color-accent);
+    border-left: none;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.widget_search .search-submit:hover {
+    background-color: var(--color-accent-secondary);
+}
+
+.widget_calendar table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+.widget_calendar caption {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: var(--color-text-light-grey);
+    font-weight: bold;
+}
+.widget_calendar th, .widget_calendar td {
+    padding: 8px 5px;
+    border: 1px solid var(--glass-border);
+}
+.widget_calendar thead th {
+    color: var(--color-accent);
+}
+.widget_calendar tbody td a {
+    font-weight: bold;
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+.widget_calendar tbody td#today {
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
+    font-weight: bold;
+}
+.widget_calendar tfoot a {
+    color: var(--color-text-light-grey);
+}
+
 /* --- Footer --- */
 .site-footer {
-    background-color: var(--color-dark-blue);
-    color: var(--color-gray-medium);
+    background-color: var(--color-dark-blue-bg);
+    color: var(--color-text-light-grey);
+    padding: var(--wp--preset--spacing--medium) 0; /* Usar preset de espaciado */
+    border-top: 1px solid var(--glass-border); /* Usar glass-border para consistencia */
+    font-size: var(--wp--preset--font-size--small, 0.9em);
+}
+
+.site-footer .footer-widgets-area {
+    padding-bottom: var(--wp--preset--spacing--medium);
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: var(--wp--preset--spacing--medium);
+}
+
+.site-footer .footer-widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--wp--preset--spacing--medium);
+}
+
+.site-footer .widget-title { /* Estilos específicos para títulos de widget en footer si es necesario */
+    font-size: var(--wp--preset--font-size--normal); /* Un poco más pequeño que en la sidebar principal */
+    color: var(--color-accent-secondary);
+    border-bottom-color: var(--color-accent-secondary);
+}
+
+.site-footer .site-info {
     text-align: center;
-    padding: 30px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.9em;
+}
+
+.site-footer .site-info p {
+    margin-bottom: var(--wp--preset--spacing--custom-1, 0.5rem); /* Asumiendo custom-1 es pequeño */
 }
 
 .site-footer a {
-    color: var(--color-green-tech);
+    color: var(--color-accent);
 }
+
+/* --- Single Post Styles --- */
+/* El contenedor .single-post-item ya no es necesario si .content-area tiene el padding */
+/* y .site-main-wrapper ya tiene el container. */
+/* Los estilos se aplicarán directamente a los elementos dentro de .content-area en single.php */
+
+.content-area .entry-header { /* Para single.php y page.php */
+    margin-bottom: var(--wp--preset--spacing--medium);
+}
+.content-area .entry-title { /* Estilo para h1 del post/página */
+    font-size: clamp(2rem, 4vw, 2.8rem); /* Responsive */
+    color: var(--color-accent);
+    text-align: left;
+    line-height: 1.2;
+}
+.content-area .entry-title::after { /* Eliminar o ajustar el subrayado global de .section-title si no se quiere aquí */
+    display: none;
+}
+
+.content-area .entry-meta { /* Para single.php */
+    font-size: var(--wp--preset--font-size--small);
+    color: var(--color-text-light-grey);
+    margin-bottom: var(--wp--preset--spacing--medium);
+    text-align: left;
+}
+.content-area .entry-meta a {
+    color: var(--color-text-light-grey);
+    text-decoration: underline;
+}
+.content-area .entry-meta a:hover {
+    color: var(--color-accent);
+}
+
+.post-thumbnail-single, /* Clase antigua */
+.content-area .wp-block-post-featured-image img { /* Para el bloque de imagen destacada */
+    margin-bottom: var(--wp--preset--spacing--medium);
+    border-radius: var(--wp--custom--border--radius, 8px);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.post-thumbnail-single img,
+.content-area .wp-block-post-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.entry-content { /* Estilos para el contenido principal del post/página */
+    font-size: var(--wp--preset--font-size--normal); /* Ajustar según theme.json */
+    line-height: 1.8; /* Mantener buena legibilidad */
+    color: var(--color-text-contrast);
+}
+.entry-content h1, .entry-content h2, .entry-content h3,
+.entry-content h4, .entry-content h5, .entry-content h6 {
+    color: var(--color-white);
+    margin-top: var(--wp--preset--spacing--medium);
+    margin-bottom: var(--wp--preset--spacing--small);
+    font-family: var(--font-secondary); /* Asegurar que los encabezados dentro del contenido también usen Poppins */
+}
+.entry-content ul, .entry-content ol {
+    margin-left: var(--wp--preset--spacing--medium);
+    margin-bottom: var(--wp--preset--spacing--small);
+}
+.entry-content li {
+    margin-bottom: var(--wp--preset--spacing--custom-1, 0.5rem); /* Asumiendo custom-1 es pequeño */
+}
+.entry-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+.entry-content a:hover {
+    color: var(--color-accent-secondary);
+}
+
+.content-area .entry-footer { /* Para single.php */
+    margin-top: var(--wp--preset--spacing--medium);
+    padding-top: var(--wp--preset--spacing--medium);
+    border-top: 1px solid var(--glass-border);
+    font-size: var(--wp--preset--font-size--small);
+    color: var(--color-text-light-grey);
+}
+.tag-links span, .cat-links span { /* Para los títulos "Etiquetas:", "Categorías:" */
+    font-weight: bold;
+    color: var(--color-text-contrast);
+}
+.tag-links a, .cat-links a { /* Para los enlaces de etiquetas/categorías */
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
+    padding: 5px 10px;
+    border-radius: var(--wp--custom--border--radius-small, 3px); /* Asumiendo radius-small */
+    margin-right: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 0.9em;
+}
+.tag-links a:hover, .cat-links a:hover {
+    background-color: var(--color-accent-secondary);
+    color: var(--color-dark-blue-bg);
+}
+
+/* Comments Section */
+#comments {
+    margin-top: var(--wp--preset--spacing--large);
+    background: var(--glass-background);
+    backdrop-filter: blur(var(--glass-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--wp--custom--border--radius, 8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    padding: var(--wp--preset--spacing--medium);
+}
+#comments .comments-title, /* Título "X respuestas a..." */
+#comments .comment-reply-title { /* Título "Deja una respuesta" */
+    color: var(--color-white);
+    font-size: var(--wp--preset--font-size--large);
+    margin-bottom: var(--wp--preset--spacing--medium);
+    font-family: var(--font-secondary);
+}
+.comment-list {
+    list-style: none;
+    padding: 0;
+}
+.comment, .pingback { /* Estilo base para cada comentario */
+    padding: var(--wp--preset--spacing--small) 0;
+    border-bottom: 1px dashed var(--glass-border);
+}
+.comment-list > .comment:last-child,
+.comment-list > .pingback:last-child {
+    border-bottom: none;
+}
+.comment-body { /* Contenedor interno del comentario */
+    padding-bottom: 0; /* Ajustado ya que el padre .comment tiene padding */
+    margin-bottom: 0; /* Ajustado */
+}
+.comment-author { /* Nombre del autor */
+    font-weight: bold;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.comment-author .avatar { /* Imagen del avatar */
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+}
+.comment-metadata {
+    font-size: var(--wp--preset--font-size--small);
+    color: var(--color-text-light-grey);
+    margin-top: 5px;
+}
+.comment-metadata a {
+    color: var(--color-text-light-grey);
+    text-decoration: underline;
+}
+.comment-metadata a:hover {
+    color: var(--color-accent);
+}
+.comment-content {
+    margin-top: var(--wp--preset--spacing--small);
+    color: var(--color-text-contrast);
+    font-size: var(--wp--preset--font-size--normal);
+}
+.reply { /* Contenedor del enlace "Responder" */
+    margin-top: var(--wp--preset--spacing--custom-1, 0.5rem);
+}
+.comment-reply-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    font-size: var(--wp--preset--font-size--small);
+    font-weight: bold;
+}
+.comment-reply-link:hover {
+    color: var(--color-accent-secondary);
+}
+
+.comment-respond { /* Contenedor del formulario de respuesta */
+    margin-top: var(--wp--preset--spacing--medium);
+    padding-top: var(--wp--preset--spacing--medium);
+    border-top: 1px solid var(--glass-border);
+}
+.comment-form label {
+    display: block;
+    color: var(--color-text-contrast);
+    margin-bottom: var(--wp--preset--spacing--custom-1, 0.5rem);
+    font-weight: bold;
+}
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"],
+.comment-form textarea {
+    background-color: rgba(var(--wp--preset--color--dark-grey-rgb, 17, 34, 64), 0.5); /* Usar --dark-grey con alfa */
+    border: 1px solid var(--glass-border);
+    color: var(--color-white);
+    padding: var(--wp--preset--spacing--custom-2, 10px); /* Asumiendo custom-2 es padding medio */
+    border-radius: var(--wp--custom--border--radius-small, 4px);
+    width: 100%;
+    max-width: 100%; /* Permitir que ocupe todo el ancho del contenedor */
+    margin-bottom: var(--wp--preset--spacing--small);
+    font-family: var(--font-primary);
+}
+.comment-form input[type="text"]:focus,
+.comment-form input[type="email"]:focus,
+.comment-form input[type="url"]:focus,
+.comment-form textarea:focus {
+    border-color: var(--color-accent);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--wp--preset--color--accent-rgb, 0, 255, 194), 0.3);
+}
+.comment-form .form-submit input[type="submit"] { /* El botón submit */
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
+    padding: var(--wp--preset--spacing--custom-2, 10px) var(--wp--preset--spacing--small, 20px);
+    border-radius: var(--wp--custom--border--radius-small, 4px);
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-secondary);
+}
+.comment-form .form-submit input[type="submit"]:hover {
+    background-color: var(--color-accent-secondary);
+    color: var(--color-dark-blue-bg);
+    transform: translateY(-2px);
+}
+.comment-form .logged-in-as,
+.comment-form .comment-notes {
+    font-size: var(--wp--preset--font-size--small);
+    color: var(--color-text-light-grey);
+    margin-bottom: var(--wp--preset--spacing--small);
+}
+.comment-form .logged-in-as a,
+.comment-form .comment-notes a {
+    color: var(--color-text-light-grey);
+    text-decoration: underline;
+}
+.comment-form .logged-in-as a:hover,
+.comment-form .comment-notes a:hover {
+    color: var(--color-accent);
+}
+
+
+/* --- Paginación y Navegación de Posts --- */
+.navigation.pagination,
+.post-navigation { /* Para la navegación de post anterior/siguiente */
+    margin-top: var(--wp--preset--spacing--large);
+    font-family: var(--font-secondary);
+}
+
+.navigation.pagination .nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--wp--preset--spacing--custom-1, 8px);
+}
+.navigation.pagination .page-numbers {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-background);
+    color: var(--color-accent);
+    text-decoration: none;
+    border-radius: var(--wp--custom--border--radius-small, 4px);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.navigation.pagination .page-numbers.current,
+.navigation.pagination .page-numbers:hover {
+    background-color: var(--color-accent);
+    color: var(--color-dark-blue-bg);
+    border-color: var(--color-accent);
+}
+.navigation.pagination .page-numbers:hover:not(.current) {
+    background-color: rgba(var(--wp--preset--color--accent-rgb, 0, 255, 194), 0.1);
+}
+
+.post-navigation .nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--wp--preset--spacing--medium);
+}
+.post-navigation .nav-previous,
+.post-navigation .nav-next {
+    flex-basis: 48%;
+}
+.post-navigation a {
+    display: block;
+    padding: var(--wp--preset--spacing--small);
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--wp--custom--border--radius, 8px);
+    color: var(--color-text-contrast);
+    transition: all 0.3s ease;
+}
+.post-navigation a:hover {
+    border-color: var(--color-accent);
+    background-color: rgba(var(--wp--preset--color--accent-rgb, 0, 255, 194), 0.05);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.post-navigation .nav-subtitle {
+    display: block;
+    font-size: var(--wp--preset--font-size--small);
+    color: var(--color-text-light-grey);
+    margin-bottom: var(--wp--preset--spacing--custom-1, 5px);
+}
+.post-navigation .nav-title {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
 
 /* --- Responsive adjustments --- */
 @media (max-width: 768px) {
