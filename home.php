@@ -13,6 +13,8 @@
  */
 
 get_header();
+$blog_view   = get_theme_mod( 'dadecore_blog_view', 'grid' );
+$show_sidebar = get_theme_mod( 'dadecore_blog_sidebar', true );
 ?>
 
     <div id="primary" class="site-main">
@@ -20,7 +22,7 @@ get_header();
             <header class="page-header">
                 <h1 class="page-title section-title"><?php single_post_title(); ?></h1>
                 <p class="section-subtitle">Explora nuestras últimas publicaciones y recursos.</p>
-            </header><div class="blog-posts-grid">
+            </header><div class="blog-posts-grid <?php echo ( 'list' === $blog_view ) ? 'blog-posts-list' : ''; ?>">
                 <?php
                 if ( have_posts() ) :
                     /* Start the Loop */
@@ -64,5 +66,7 @@ get_header();
     </div><!-- #primary -->
 
 <?php
-get_sidebar();
+if ( $show_sidebar ) {
+    get_sidebar();
+}
 get_footer();

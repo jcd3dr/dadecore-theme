@@ -1,7 +1,7 @@
     </main> <!-- #content -->
 
     <footer id="colophon" class="site-footer">
-        <?php if ( is_active_sidebar( 'footer-1' ) || is_active_sidebar( 'footer-2' ) || is_active_sidebar( 'footer-3' ) ) : ?>
+        <?php if ( get_theme_mod( 'dadecore_footer_show_widgets', true ) && ( is_active_sidebar( 'footer-1' ) || is_active_sidebar( 'footer-2' ) || is_active_sidebar( 'footer-3' ) ) ) : ?>
             <div class="footer-widgets-area">
                 <div class="container">
                     <div class="footer-widgets-grid">
@@ -39,6 +39,14 @@
                 );
                 ?>
                 <p>&copy; <?php echo date_i18n( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'dadecore-theme' ); ?></p>
+                <?php if ( get_theme_mod( 'dadecore_footer_custom_text' ) ) : ?>
+                    <p class="custom-footer-text"><?php echo wp_kses_post( get_theme_mod( 'dadecore_footer_custom_text' ) ); ?></p>
+                <?php endif; ?>
+                <?php if ( function_exists( 'dadecore_has_social_links' ) && dadecore_has_social_links() ) : ?>
+                    <div class="footer-social-links">
+                        <?php dadecore_output_social_links(); ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div><!-- .site-info -->
     </footer><!-- #colophon -->
