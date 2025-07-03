@@ -169,12 +169,12 @@ add_action( 'customize_register', 'dadecore_customize_register_404' );
 // ===================================================================
 
 function dadecore_customizer_live_preview() {
-    wp_enqueue_script( 
-        'dadecore-customizer-preview', 
-        get_template_directory_uri() . '/assets/js/customizer-preview.js', 
-        array( 'customize-preview' ), 
-        null, 
-        true 
+    wp_enqueue_script(
+        'dadecore-customizer-preview',
+        get_template_directory_uri() . '/assets/js/customizer-preview.js',
+        array( 'jquery', 'customize-preview' ),
+        null,
+        true
     );
 }
 add_action( 'customize_preview_init', 'dadecore_customizer_live_preview' );
