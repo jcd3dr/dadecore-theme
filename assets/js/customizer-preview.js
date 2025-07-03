@@ -17,7 +17,7 @@
 
     wp.customize('dadecore_404_custom_title', function(value) {
         value.bind(function(newval) {
-            $('.error-404 .page-title, .error-404 not-found h1').text(newval);
+            $('.error-404 .page-title, .error-404.not-found h1').text(newval);
         });
     });
     wp.customize('dadecore_404_custom_message', function(value) {
