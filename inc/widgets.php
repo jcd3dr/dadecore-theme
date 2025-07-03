@@ -20,6 +20,19 @@ function dadecore_widgets_init() {
 		)
 	);
 
+	register_sidebar(
+	array(
+		'name'          => esc_html__( '404 Page Sidebar', 'dadecore-theme' ),
+		'id'            => '404-sidebar',
+		'description'   => esc_html__( 'Widgets here appear on the 404 error page.', 'dadecore-theme' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h4 class="widget-title">',
+		'after_title'   => '</h4>',
+	      )
+	);
+
+
 	// Áreas de widgets para el pie de página (Ejemplo: 3 columnas)
 	register_sidebar(
 		array(
