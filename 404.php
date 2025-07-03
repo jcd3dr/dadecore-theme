@@ -9,7 +9,8 @@ get_header();
 $sidebar_position = get_theme_mod( 'dadecore_404_sidebar_position', 'right' );
 ?>
 
-<div class="site-main-wrapper container section-padding sidebar-<?php echo esc_attr( $sidebar_position ); ?>">
+<div class="site-main-wrapper container section-padding">
+    <div class="content-with-sidebar sidebar-<?php echo esc_attr( $sidebar_position ); ?>">
     <main id="main" class="site-main" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
         <div class="dadecore-404-wrapper" style="text-align:center; padding: 60px 20px;">
         <section class="error-404 not-found">
@@ -42,6 +43,7 @@ $sidebar_position = get_theme_mod( 'dadecore_404_sidebar_position', 'right' );
             <?php dynamic_sidebar( '404-sidebar' ); ?>
         </aside>
     <?php endif; ?>
+    </div>
 </div>
 
 <?php get_footer();

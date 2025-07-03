@@ -13,6 +13,7 @@ $show_sidebar = get_theme_mod( 'dadecore_blog_sidebar', true );
 ?>
 
 <div class="site-main-wrapper container section-padding">
+    <div class="content-with-sidebar">
     <main id="primary" class="site-main content-area">
         <header class="page-header">
             <?php
@@ -73,10 +74,10 @@ $show_sidebar = get_theme_mod( 'dadecore_blog_sidebar', true );
             endif;
             ?>
         </div><!-- .blog-posts-grid -->
-    </main><!-- #primary .content-area -->
+</main><!-- #primary .content-area -->
 
     <?php if ( $show_sidebar ) { get_sidebar(); } ?>
-
+    </div>
 </div><!-- .site-main-wrapper -->
 <?php
 get_footer();

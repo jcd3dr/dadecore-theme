@@ -503,7 +503,8 @@ img {
 }
 
 /* --- Layout con Sidebar --- */
-.site-main-wrapper {
+.site-main-wrapper,
+.content-with-sidebar {
     display: flex;
     flex-wrap: wrap; /* Para que la sidebar caiga abajo en móviles */
     gap: var(--wp--preset--spacing--large, 40px); /* Espacio entre contenido y sidebar */
@@ -521,7 +522,8 @@ img {
 }
 
 @media (max-width: 991px) { /* Breakpoint para tablet y móviles donde la sidebar va abajo */
-    .site-main-wrapper {
+    .site-main-wrapper,
+    .content-with-sidebar {
         flex-direction: column;
     }
     .widget-area {

@@ -12,7 +12,8 @@ $show_meta    = get_theme_mod( 'dadecore_single_show_meta', true );
 $sidebar_pos  = get_theme_mod( 'dadecore_single_sidebar_position', 'right' );
 ?>
 
-<div class="site-main-wrapper container section-padding sidebar-<?php echo esc_attr( $sidebar_pos ); ?>">
+<div class="site-main-wrapper container section-padding">
+    <div class="content-with-sidebar sidebar-<?php echo esc_attr( $sidebar_pos ); ?>">
     <main id="primary" class="site-main content-area">
         <?php
         while ( have_posts() ) :
@@ -96,10 +97,10 @@ $sidebar_pos  = get_theme_mod( 'dadecore_single_sidebar_position', 'right' );
             echo '</div>';
         }
         ?>
-    </main><!-- #primary .content-area -->
+</main><!-- #primary .content-area -->
 
     <?php get_sidebar(); ?>
-
+    </div>
 </div><!-- .site-main-wrapper -->
 <?php
 get_footer();
