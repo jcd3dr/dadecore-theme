@@ -1,13 +1,8 @@
 <?php
 /**
- * The main template file
+ * The template for displaying search results pages
  *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
  * @package DadeCore_Theme
  */
@@ -17,11 +12,14 @@ get_header();
 
 <div class="site-main-wrapper container section-padding">
     <main id="primary" class="site-main content-area">
-        <?php if ( is_home() && ! is_front_page() ) : ?>
-            <header class="page-header">
-                <h1 class="page-title section-title"><?php single_post_title(); ?></h1>
-            </header>
-        <?php endif; ?>
+        <header class="page-header">
+            <h1 class="page-title section-title">
+                <?php
+                /* translators: %s: search query. */
+                printf( esc_html__( 'Search Results for: %s', 'dadecore-theme' ), '<span>' . get_search_query() . '</span>' );
+                ?>
+            </h1>
+        </header><!-- .page-header -->
 
         <div class="blog-posts-grid">
             <?php
@@ -35,7 +33,7 @@ get_header();
                         <?php if ( has_post_thumbnail() ) : ?>
                             <div class="post-thumbnail">
                                 <a href="<?php the_permalink(); ?>">
-                                    <?php the_post_thumbnail( 'medium' ); // Consider 'dadecore_card_thumbnail' or similar custom size ?>
+                                    <?php the_post_thumbnail( 'medium' ); // Consider 'dadecore_card_thumbnail' ?>
                                 </a>
                             </div>
                         <?php else : ?>
@@ -46,16 +44,13 @@ get_header();
                             </div>
                         <?php endif; ?>
                         <header class="entry-header">
-                            <?php
-                            if ( is_singular() ) : // Should not happen in index.php if it's a list
-                                the_title( '<h1 class="entry-title section-title">', '</h1>' );
-                            else :
-                                the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
-                            endif;
-                            ?>
+                            <?php the_title( '<h3 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
                         </header>
                         <div class="entry-summary">
-                            <?php the_excerpt(); ?>
+                            <?php
+                            // For search results, it's often better to show an excerpt.
+                            the_excerpt();
+                            ?>
                         </div>
                         <footer class="entry-footer">
                             <a href="<?php the_permalink(); ?>" class="read-more-btn"><?php esc_html_e( 'Read More &rarr;', 'dadecore-theme' ); ?></a>
@@ -68,8 +63,9 @@ get_header();
                     }
                 endwhile;
 
+                // Paginación
                 the_posts_pagination( array(
-                    'prev_text'          => esc_html__( '&laquo; Previous Posts', 'dadecore-theme' ),
+                    'prev_text'          => esc_html__( '&laquo; Previous Results', 'dadecore-theme' ),
                     'next_text'          => esc_html__( 'Next &raquo;', 'dadecore-theme' ),
                     'before_page_number' => '<span class="meta-nav screen-reader-text">' . esc_html__( 'Page', 'dadecore-theme' ) . ' </span>',
                 ) );

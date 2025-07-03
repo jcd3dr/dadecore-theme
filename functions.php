@@ -82,16 +82,19 @@ add_action( 'after_setup_theme', 'dadecore_theme_setup' );
  */
 function dadecore_theme_scripts() {
 	// Estilos principales del tema
-	wp_enqueue_style( 'dadecore-theme-main-style', get_template_directory_uri() . '/assets/css/main.css', array(), null );
+    $main_style_version = filemtime(get_template_directory() . '/assets/css/main.css');
+    wp_enqueue_style( 'dadecore-theme-main-style', get_template_directory_uri() . '/assets/css/main.css', array(), $main_style_version );
 
-	// Fuentes de Google (Inter y Poppins)
+	// Fuentes de Google (Inter y Poppins) - Mantenido como fallback o si las fuentes locales no se usan.
+	// Si se usan fuentes locales exclusivamente desde theme.json, esta sección podría eliminarse.
 	// Precarga para optimización
-	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap', false );
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap', array(), null ); // No necesita versión, es CDN
 	wp_style_add_data( 'google-fonts', 'precache', true );
 
 
 	// Script principal del tema
-	wp_enqueue_script( 'dadecore-theme-main-script', get_template_directory_uri() . '/assets/js/main.js', array(), null, true ); // 'true' para cargar en el footer
+    $main_script_version = filemtime(get_template_directory() . '/assets/js/main.js');
+	wp_enqueue_script( 'dadecore-theme-main-script', get_template_directory_uri() . '/assets/js/main.js', array(), $main_script_version, true ); // 'true' para cargar en el footer
 
 	// Asegúrate de que jQuery no se cargue por defecto si no lo necesitas,
 	// o que se cargue de forma selectiva si algún plugin lo requiere.
@@ -127,3 +130,6 @@ require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/security.php';
 require get_template_directory() . '/inc/cookie-consent.php';
 require get_template_directory() . '/inc/theme-options.php';
+require get_template_directory() . '/inc/widgets.php'; // Widget areas
+require get_template_directory() . '/inc/gutenberg.php'; // Gutenberg features (patterns, styles)
+require get_template_directory() . '/inc/template-helpers.php'; // Template helper functions

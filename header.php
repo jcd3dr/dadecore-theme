@@ -44,6 +44,12 @@
             ?>
         </nav>
     </header>
+    <?php
+    if ( is_active_sidebar( 'ads-header' ) ) : ?>
+        <div class="container ads-header-area">
+            <?php dynamic_sidebar( 'ads-header' ); ?>
+        </div>
+    <?php endif; ?>
 
 <!-- Contenedor principal del contenido -->
 <main id="content" class="site-content">

@@ -56,8 +56,13 @@ get_header();
                     ) );
 
                 else :
-                    echo '<p>' . esc_html__( 'Lo sentimos, no se encontraron entradas de blog.', 'dadecore-theme' ) . '</p>';
+                    get_template_part( 'template-parts/content', 'none' );
                 endif;
                 ?>
-            </div></div></div><?php
+            </div><!-- .blog-posts-grid -->
+        </div><!-- .container -->
+    </div><!-- #primary -->
+
+<?php
+get_sidebar();
 get_footer();
